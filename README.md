@@ -35,3 +35,7 @@ Following the [link](https://zhuanlan.zhihu.com/p/608119275) to install aliyunpa
 login -RefreshToken=xxxxxxxxxxxxxxxxxxxxxxxxxxx
 upload /path/to/the/data_folder /textbook
 ```
+
+## Points to note:
+1. Based on my experience, currently the most stable way to download is using Codespaces. Downloading on a local computer or server results in almost zero speed. \\
+2. Codespaces cannot use "screen," so it is preferable to run Codespaces using VSCode. This allows for longer durations, as disconnecting from Codespaces will cause the process to disappear.
