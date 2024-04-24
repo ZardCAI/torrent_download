@@ -1,5 +1,11 @@
 import libtorrent as lt
 import os
+from tqdm import tqdm
+from multiprocessing import Pool
+
+def download_file(args):
+    torrent_file, file_path, file_index = args
+    download_torrent_file(torrent_file, file_path, file_index)
 
 def download_torrent_file(torrent_file, save_path, file_index):
     ses = lt.session()
@@ -19,11 +25,14 @@ def download_torrent_file(torrent_file, save_path, file_index):
 
 
     # 等待种子下载完成
+    count = 0
     while not handle.is_seed():
+        count += 1
         s = handle.status()
-        print('Downloading: {}% complete (down: {} kB/s up: {} kB/s peers: {})'.format(
-            s.progress * 100, s.download_rate / 1000, s.upload_rate / 1000, s.num_peers))
-        if s.progress == 1:
+        if count % 50000 == 0:
+            print('Downloading: {}% complete (down: {} kB/s up: {} kB/s peers: {} count: {})'.format(
+                s.progress * 100, s.download_rate / 1000, s.upload_rate / 1000, s.num_peers, count))
+        if (s.progress == 1) or (s.progress == 0 and count > 1000000) or (s.download_rate == 0 and count > 10000000):
             break
 
     ses.remove_torrent(handle)
@@ -31,18 +40,17 @@ def download_torrent_file(torrent_file, save_path, file_index):
 # 示例用法
 file_path_format = './textbook/{}/'
 torrent_file_format = './torrent/{}'
-for i in range(1, 2):
+download_args = []
+
+for i in range(22, 32): #下载22页-32页的书籍
     filelist = os.listdir(torrent_file_format.format(i))
-    for file in filelist:
+    for file in tqdm(filelist):
+        if file == 'error.txt':
+            continue
         file_path = file_path_format.format(i)
         torrent_file = torrent_file_format.format(i) + '/' + file
         file_index = file[0:32]
-        print(torrent_file)
-        print(file_path)
-        print(file_index)
-        download_torrent_file(torrent_file, file_path, file_index)
-# torrent_file = '5c3b2e74c15fd0b911b652dcbc3f7441.torrent'  # 种子文件路径
-# save_path = './'  # 下载保存路径
-# file_index = '5c3b2e74c15fd0b911b652dcbc3f7441'   # 要下载的文件索引
+        download_args.append((torrent_file, file_path, file_index))
 
-# download_torrent_file(torrent_file, save_path, file_index)
+with Pool(processes=2) as pool:  # 这里的2是进程数，你可以根据你的实际情况来修改这个值
+    pool.map(download_file, download_args)
