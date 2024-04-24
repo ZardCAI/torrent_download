@@ -8,7 +8,7 @@ pip install tqdm
 ## Usage
 ### Step 1
 Unzip the torrent.zip doucument, and make the project directory looks like this.
-
+```
 root/
 ├── torrent
 │   ├── 1
@@ -20,6 +20,7 @@ root/
 ├── textbook
 ├── torrent_selection.py
 └── ...
+```
 
 ### Step 2
 Modify the line xx (range(a, b)) in torrent_selection.py, to download the textbook from page a to page b.
