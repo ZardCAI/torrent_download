@@ -23,7 +23,7 @@ root/
 ```
 
 ### Step 2
-Modify the line xx (range(a, b)) in torrent_selection.py, to download the textbook from page a to page b.
+Modify the line 45 (range(a, b)) in torrent_selection.py, to download the textbook from page a to page b.
 Run:
 ```
 nohup python torrent_selection.py &
