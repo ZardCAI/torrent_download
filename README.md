@@ -30,7 +30,7 @@ nohup python torrent_selection.py &
 ```
 
 ### Step 3
-Following the [link](https://zhuanlan.zhihu.com/p/608119275) to install aliyunpan. Then, use the commands to upload the textbooks to aliyunpan.
+Following the [link](https://zhuanlan.zhihu.com/p/608119275) to install aliyunpan. Then, use the commands to upload the downloaded textbooks to aliyunpan.
 ```
 login -RefreshToken=xxxxxxxxxxxxxxxxxxxxxxxxxxx
 upload /path/to/the/data_folder /textbook
