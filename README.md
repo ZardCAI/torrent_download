@@ -6,6 +6,16 @@ pip install libtorrent
 pip install tqdm
 ```
 ## Usage
+### Step 0
+```
+python anna_bookid_download.py
+```
+This command can download the md5 id of the books.
+```
+python anna_book_download_torrent.py
+```
+This command uses the ids to get the torrent files that contain the target books.
+
 ### Step 1
 Unzip the torrent.zip doucument, and make the project directory looks like this.
 ```
